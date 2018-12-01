@@ -19,16 +19,11 @@ public class GradeService {
             List<String> names = Arrays.stream(data).map(i -> i[0]).
                     distinct().sorted().collect(Collectors.toList());
 
-            for (String[] singleData: data) {
-                System.out.println(Arrays.toString(singleData));
-
-            }
-
             String[][] result =new String [names.size()][2];
 
             for (int i=0; i<names.size(); i++) {
-                BigDecimal counter = new BigDecimal("0");
-                BigDecimal sum = new BigDecimal("0");
+                BigDecimal counter = BigDecimal.ZERO;
+                BigDecimal sum = BigDecimal.ZERO;
                 for (String [] singleData: data) {
                     if (names.get(i).equals(singleData[0])) {
                         sum = sum.add(stringToBigDecimal(singleData[1]));
@@ -39,13 +34,11 @@ public class GradeService {
                 result[i][1]=String.format("%.2f",Double.valueOf(decimalFormat.format(sum.divide(counter, 2, RoundingMode.UP))));
             }
 
-
             return result;
         }
     }
     private BigDecimal stringToBigDecimal(String value) {
         try {
-            System.out.println(new BigDecimal(value));
             return new BigDecimal(value);
         } catch (Exception e) {
             return BigDecimal.ZERO;
